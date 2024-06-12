@@ -1,0 +1,18 @@
+def odd_string_difference(words):
+    def difference_array(word):
+        return [ord(word[i+1]) - ord(word[i]) for i in range(len(word) - 1)]
+    
+    diff_dict = {}
+    for word in words:
+        diff = tuple(difference_array(word))
+        if diff not in diff_dict:
+            diff_dict[diff] = [word]
+        else:
+            diff_dict[diff].append(word)
+    
+    for key, val in diff_dict.items():
+        if len(val) == 1:
+            return val[0]
+
+print(odd_string_difference(["adc","wzy","abc"])) 
+print(odd_string_difference(["aaa","bob","ccc","ddd"])) 
