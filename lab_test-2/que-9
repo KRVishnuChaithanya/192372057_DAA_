@@ -1,0 +1,20 @@
+def find_max(arr):
+    if len(arr) == 1:
+        return arr[0]
+    
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
+    
+    max_left = find_max(left_half)
+    max_right = find_max(right_half)
+    
+    return max(max_left, max_right)
+
+def main():
+    arr = list(map(int, input("Enter the array elements separated by space: ").split()))
+    max_element = find_max(arr)
+    print("The maximum element in the array is:", max_element)
+
+if __name__ == "__main__":
+    main()
