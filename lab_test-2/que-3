@@ -1,0 +1,16 @@
+import bisect
+
+def find_positions(arr, targets):
+    positions = {}
+    for target in targets:
+        index = bisect.bisect_left(arr, target)
+        if index != len(arr) and arr[index] == target:
+            positions[target] = index
+        else:
+            positions[target] = -1  
+    return positions
+
+sorted_arr = [1, 3, 4, 5, 7, 8, 9]
+targets = [5, 7, 10]
+positions = find_positions(sorted_arr, targets)
+print("Positions of targets:", positions)
