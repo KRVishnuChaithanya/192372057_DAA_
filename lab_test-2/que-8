@@ -1,0 +1,26 @@
+def median_of_medians(arr, k):
+    sublists = [arr[j:j+5] for j in range(0, len(arr), 5)]
+    medians = [sorted(sublist)[len(sublist)//2] for sublist in sublists]
+    if len(medians) <= 5:
+        pivot = sorted(medians)[len(medians)//2]
+    else:
+        pivot = median_of_medians(medians, len(medians)//2)
+    low = [el for el in arr if el < pivot]
+    high = [el for el in arr if el > pivot]
+    pivot_count = len(arr) - len(low) - len(high)
+
+    if k < len(low):
+        return median_of_medians(low, k)
+    elif k < len(low) + pivot_count:
+        return pivot
+    else:
+        return median_of_medians(high, k - len(low) - pivot_count)
+def find_median(arr):
+    length = len(arr)
+    if length % 2 == 1:
+        return median_of_medians(arr, length // 2)
+    else:
+        return 0.5 * (median_of_medians(arr, length // 2 - 1) + median_of_medians(arr, length // 2))
+arr = [12, 3, 5, 7, 4, 19, 26]
+median = find_median(arr)
+print("The median of the array is:", median)
