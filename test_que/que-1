@@ -1,0 +1,12 @@
+def min_length_after_removals(nums):
+    n = len(nums)
+    max_pairs = n // 2
+    remaining_elements = n - 2 * max_pairs
+    return remaining_elements
+
+nums = [1, 2, 3, 4]
+print(min_length_after_removals(nums))  
+nums = [1, 1, 2, 2, 3, 3]
+print(min_length_after_removals(nums))  
+nums = [1, 1, 2, 2, 2, 3, 3, 4]
+print(min_length_after_removals(nums))  
