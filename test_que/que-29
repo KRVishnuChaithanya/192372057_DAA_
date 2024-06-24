@@ -1,0 +1,21 @@
+from collections import Counter
+
+def minLengthAfterRemovals(nums):
+    count = Counter(nums)
+    
+    pairs_removed = 0
+
+    for num in sorted(count):
+        if count[num] > 0:
+            if num + 1 in count:
+                pairs = min(count[num], count[num + 1])
+                count[num] -= pairs
+                count[num + 1] -= pairs
+                pairs_removed += pairs
+
+    remaining_elements = sum(count.values())
+
+    return remaining_elements
+
+nums = [1, 2, 3, 4]
+print(minLengthAfterRemovals(nums))  
