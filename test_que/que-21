@@ -1,0 +1,53 @@
+MOD = 10**9 + 7
+
+def numGoodStrings(n, s1, s2, evil):
+    def computeKMPTable(evil):
+        kmp = [0] * len(evil)
+        j = 0
+        for i in range(1, len(evil)):
+            while j > 0 and evil[i] != evil[j]:
+                j = kmp[j - 1]
+            if evil[i] == evil[j]:
+                j += 1
+                kmp[i] = j
+        return kmp
+
+    kmp = computeKMPTable(evil)
+    
+
+    memo = {}
+
+    def dp(index, is_prefix_s1, is_prefix_s2, matched_len):
+        if matched_len == len(evil):
+            return 0  # if the string contains the "evil" substring
+        if index == n:
+            return 1  # reached the end of the string
+
+        if (index, is_prefix_s1, is_prefix_s2, matched_len) in memo:
+            return memo[(index, is_prefix_s1, is_prefix_s2, matched_len)]
+
+        result = 0
+        lower_bound = s1[index] if is_prefix_s1 else 'a'
+        upper_bound = s2[index] if is_prefix_s2 else 'z'
+
+        for char in range(ord(lower_bound), ord(upper_bound) + 1):
+            char = chr(char)
+            next_matched_len = matched_len
+            while next_matched_len > 0 and evil[next_matched_len] != char:
+                next_matched_len = kmp[next_matched_len - 1]
+            if char == evil[next_matched_len]:
+                next_matched_len += 1
+            
+            result += dp(index + 1, is_prefix_s1 and char == lower_bound, is_prefix_s2 and char == upper_bound, next_matched_len)
+            result %= MOD
+        
+        memo[(index, is_prefix_s1, is_prefix_s2, matched_len)] = result
+        return result
+    
+    return dp(0, True, True, 0)
+
+n = 2
+s1 = "aa"
+s2 = "da"
+evil = "b"
+print(numGoodStrings(n, s1, s2, evil))  # Output: 51
