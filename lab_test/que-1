@@ -1,0 +1,33 @@
+import heapq
+
+def dijkstra_adjacency_matrix(n, graph, source):
+    dist = [float('inf')] * n
+    dist[source] = 0
+    visited = set()
+
+    while len(visited) < n:
+        u = min((v for v in range(n) if v not in visited), key=lambda x: dist[x])
+        visited.add(u)
+
+        for v in range(n):
+            if v not in visited and graph[u][v] != float('inf'):
+                dist[v] = min(dist[v], dist[u] + graph[u][v])
+
+    return dist
+
+n1 = 5
+graph1 = [[0, 10, 3, float('inf'), float('inf')],
+          [float('inf'), 0, 1, 2, float('inf')],
+          [float('inf'), 4, 0, 8, 2],
+          [float('inf'), float('inf'), float('inf'), 0, 7],
+          [float('inf'), float('inf'), float('inf'), 9, 0]]
+source1 = 0
+print(dijkstra_adjacency_matrix(n1, graph1, source1)) 
+
+n2 = 4
+graph2 = [[0, 5, float('inf'), 10],
+          [float('inf'), 0, 3, float('inf')],
+          [float('inf'), float('inf'), 0, 1],
+          [float('inf'), float('inf'), float('inf'), 0]]
+source2 = 0
+print(dijkstra_adjacency_matrix(n2, graph2, source2))  
