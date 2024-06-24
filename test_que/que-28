@@ -1,0 +1,28 @@
+def containsNearbyAlmostDuplicate(nums, indexDiff, valueDiff):
+    if indexDiff <= 0 or valueDiff < 0:
+        return False
+
+    bucket = {}
+    width = valueDiff + 1 
+
+    for i, num in enumerate(nums):
+        bucket_id = num // width
+
+        if bucket_id in bucket:
+            return True
+
+        if (bucket_id - 1 in bucket and abs(num - bucket[bucket_id - 1]) < width) or \
+           (bucket_id + 1 in bucket and abs(num - bucket[bucket_id + 1]) < width):
+            return True
+
+        bucket[bucket_id] = num
+
+        if i >= indexDiff:
+            del bucket[nums[i - indexDiff] // width]
+
+    return False
+
+nums = [1, 2, 3, 1]
+indexDiff = 3
+valueDiff = 0
+print(containsNearbyAlmostDuplicate(nums, indexDiff, valueDiff))  # Output: True
