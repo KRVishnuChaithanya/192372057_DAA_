@@ -1,0 +1,58 @@
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def sortList(head):
+    if not head or not head.next:
+        return head
+
+    def split(head):
+        slow = head
+        fast = head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        mid = slow.next
+        slow.next = None
+        return head, mid
+
+    def merge(l1, l2):
+        dummy = ListNode()
+        current = dummy
+        while l1 and l2:
+            if l1.val < l2.val:
+                current.next = l1
+                l1 = l1.next
+            else:
+                current.next = l2
+                l2 = l2.next
+            current = current.next
+        current.next = l1 if l1 else l2
+        return dummy.next
+
+    left, right = split(head)
+
+    left = sortList(left)
+    right = sortList(right)
+
+    return merge(left, right)
+
+def listToLinkedList(arr):
+    dummy = ListNode()
+    current = dummy
+    for val in arr:
+        current.next = ListNode(val)
+        current = current.next
+    return dummy.next
+
+def linkedListToList(head):
+    arr = []
+    while head:
+        arr.append(head.val)
+        head = head.next
+    return arr
+
+head = listToLinkedList([4, 2, 1, 3])
+sorted_head = sortList(head)
+print(linkedListToList(sorted_head))  
