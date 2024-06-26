@@ -1,0 +1,59 @@
+MOD = 10**9 + 7
+
+def count_good_strings(n, s1, s2, evil):
+    len_evil = len(evil)
+    
+    def build_kmp_table(pattern):
+        kmp_table = [0] * len(pattern)
+        j = 0
+        for i in range(1, len(pattern)):
+            while j > 0 and pattern[i] != pattern[j]:
+                j = kmp_table[j - 1]
+            if pattern[i] == pattern[j]:
+                j += 1
+            kmp_table[i] = j
+        return kmp_table
+    
+    kmp_table = build_kmp_table(evil)
+    
+    memo = {}
+    
+    def dp(i, is_prefix_s1, is_prefix_s2, matched_length):
+        if matched_length == len_evil:
+            return 0  
+        if i == n:
+            return 1  
+        
+        if (i, is_prefix_s1, is_prefix_s2, matched_length) in memo:
+            return memo[(i, is_prefix_s1, is_prefix_s2, matched_length)]
+        
+        start_char = s1[i] if is_prefix_s1 else 'a'
+        end_char = s2[i] if is_prefix_s2 else 'z'
+        
+        total_count = 0
+        
+        for char_code in range(ord(start_char), ord(end_char) + 1):
+            char = chr(char_code)
+            
+            new_is_prefix_s1 = is_prefix_s1 and (char == start_char)
+            new_is_prefix_s2 = is_prefix_s2 and (char == end_char)
+            
+            new_matched_length = matched_length
+            while new_matched_length > 0 and char != evil[new_matched_length]:
+                new_matched_length = kmp_table[new_matched_length - 1]
+            if char == evil[new_matched_length]:
+                new_matched_length += 1
+            
+            total_count += dp(i + 1, new_is_prefix_s1, new_is_prefix_s2, new_matched_length)
+            total_count %= MOD
+        
+        memo[(i, is_prefix_s1, is_prefix_s2, matched_length)] = total_count
+        return total_count
+    
+    return dp(0, True, True, 0)
+
+n = 2
+s1 = "aa"
+s2 = "da"
+evil = "b"
+print(count_good_strings(n, s1, s2, evil))  
