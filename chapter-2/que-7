@@ -1,0 +1,10 @@
+def strStr(haystack, needle):
+    return haystack.find(needle)
+
+print("Test Case 1:")
+print('Input: haystack = "sadbutsad", needle = "sad"')
+print("Output:", strStr("sadbutsad", "sad")) 
+
+
+print('Input: haystack = "leetcode", needle = "leeto"')
+print("Output:", strStr("leetcode", "leeto")) 
