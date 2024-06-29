@@ -1,0 +1,15 @@
+def process_list(nums):
+    if not nums:
+        return "The list is empty"
+    
+    sorted_nums = sorted(nums)
+    
+    max_value = sorted_nums[-1]
+    
+    return max_value
+
+print(process_list([]))  
+print(process_list([1, 2, 3, 4, 5]))  
+print(process_list([7, 7, 7, 7, 7]))  
+print(process_list([-10, 2, 3, -4, 5]))  
+print(process_list([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]))  
