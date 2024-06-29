@@ -1,0 +1,20 @@
+def findSubstrings(words):
+    result = []
+    for i in range(len(words)):
+        for j in range(len(words)):
+            if i != j and words[i] in words[j]:
+                result.append(words[i])
+                break
+    return result
+
+print("Test Case 1:")
+print('Input: words = ["mass","as","hero","superhero"]')
+print("Output:", findSubstrings(["mass", "as", "hero", "superhero"])) 
+
+print("\nTest Case 2:")
+print('Input: words = ["leetcode","et","code"]')
+print("Output:", findSubstrings(["leetcode", "et", "code"]))
+
+
+print('Input: words = ["blue","green","bu"]')
+print("Output:", findSubstrings(["blue", "green", "bu"])) 
