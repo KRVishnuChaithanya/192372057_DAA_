@@ -1,0 +1,21 @@
+def sum_of_squares_of_distinct_counts(nums):
+    n = len(nums)
+    result = 0
+    
+    for i in range(n):
+        count_map = {}
+        distinct_count = 0
+        
+        for j in range(i, n):
+            if nums[j] in count_map:
+                count_map[nums[j]] += 1
+            else:
+                count_map[nums[j]] = 1
+                distinct_count += 1
+            
+            result += distinct_count ** 2
+    
+    return result
+
+print(sum_of_squares_of_distinct_counts([1, 2, 1]))  
+print(sum_of_squares_of_distinct_counts([1, 1]))    
