@@ -1,0 +1,14 @@
+def find_max(nums):
+    if not nums:
+        raise ValueError("The input array is empty")
+    
+    max_value = nums[0]
+    
+    for num in nums[1:]:
+        if num > max_value:
+            max_value = num
+    
+    return max_value
+
+print(find_max([1, 2, 3, 4, 5]))  
+print(find_max([-10, 2, 3, -4, 5]))  
