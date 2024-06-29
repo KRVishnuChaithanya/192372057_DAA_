@@ -1,0 +1,21 @@
+def findKthPositive(arr, k):
+    missing_count = 0
+    current_num = 1
+    index = 0
+    
+    while True:
+        if index < len(arr) and arr[index] == current_num:
+            index += 1
+        else:
+            missing_count += 1
+            if missing_count == k:
+                return current_num
+        current_num += 1
+
+print("Test Case 1:")
+print("Input: arr = [2,3,4,7,11], k = 5")
+print("Output:", findKthPositive([2, 3, 4, 7, 11], 5)) 
+
+print("\nTest Case 2:")
+print("Input: arr = [1,2,3,4], k = 2")
+print("Output:", findKthPositive([1, 2, 3, 4], 2)) 
