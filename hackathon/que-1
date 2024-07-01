@@ -1,0 +1,39 @@
+def graph_coloring(edges, num_vertices):
+    # Convert edge list to adjacency list
+    adj_list = {i: [] for i in range(num_vertices)}
+    for edge in edges:
+        adj_list[edge[0]].append(edge[1])
+        adj_list[edge[1]].append(edge[0])
+    
+    # Helper function to find the minimum color that can be used for a vertex
+    def get_color(vertex, colors, adj_list):
+        used_colors = set(colors[neighbor] for neighbor in adj_list[vertex] if colors[neighbor] != -1)
+        color = 0
+        while color in used_colors:
+            color += 1
+        return color
+    
+    # Initialize colors array
+    colors = [-1] * num_vertices
+    
+    # Function to color the graph
+    def color_graph():
+        for vertex in range(num_vertices):
+            if colors[vertex] == -1:
+                colors[vertex] = get_color(vertex, colors, adj_list)
+    
+    color_graph()
+    
+    return colors
+
+# Input: list of edges and number of vertices
+edges = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 2)]
+num_vertices = 4
+
+# Get the colors assigned to each vertex
+colors = graph_coloring(edges, num_vertices)
+
+# Display the result
+print("Colors assigned to vertices:")
+for vertex in range(num_vertices):
+    print(f"Vertex {vertex}: Color {colors[vertex]}")
